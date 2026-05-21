@@ -2,10 +2,10 @@
 RUSTFLAGS = "-C target-cpu=cortex-a76 -C link-arg=--library-path=src/__board__/raspberrypi -C link-arg=--script=kernel.ld"
 
 [tasks.mint]
-script = "RUSTFLAGS=${RUSTFLAGS} cargo rustc --target aarch64-unknown-none-softfloat --release"
+script = "RUSTFLAGS=${RUSTFLAGS} cargo rustc --release"
 
 [tasks.strip]
-script = "cargo objcopy --target aarch64-unknown-none-softfloat --release  -- --strip-all -O binary target/kernel_2712.img"
+script = "cargo objcopy --release  -- --strip-all -O binary target/kernel_2712.img"
 
 [tasks.sync]
 dependencies = ["mint", "strip"]
