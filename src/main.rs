@@ -5,9 +5,8 @@
 
 mod board_core;
 mod bootloader;
-mod console;
+// mod console;
 mod cpu;
-mod io;
 mod kernel;
 mod panic_cfg;
-mod print;
+// mod print;

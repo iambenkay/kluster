@@ -2,9 +2,9 @@
 mod raspberrypi;
 
 #[path = "__board__/raspberrypi/screen.rs"]
-mod screen;
+pub mod screen;
 
-#[path = "__board__/raspberrypi/console.rs"]
-mod console;
+// #[path = "__board__/raspberrypi/console.rs"]
+// mod console;
 
-pub use console::console;
+// pub use console::console;
