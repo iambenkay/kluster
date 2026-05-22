@@ -75,11 +75,19 @@ impl Color {
     pub fn blue() -> Color {
         Color::from_rgb(0, 0, 255)
     }
+
+    pub fn zero() -> Color {
+        Color::from_rgb(0, 0, 0)
+    }
 }
 
 impl Into<u32> for &Color {
     fn into(self) -> u32 {
-        (self.r as u32) | (self.g as u32) << 8 | (self.b as u32) << 16 | (self.a as u32) << 24
+        if cfg!(feature = "rpi4") {
+            u32::from_le_bytes([self.r, self.g, self.b, self.a])
+        } else {
+            u32::from_le_bytes([self.a, self.b, self.g, self.r])
+        }
     }
 }
 
