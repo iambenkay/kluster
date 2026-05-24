@@ -42,7 +42,11 @@ impl Color {
     }
 
     fn to_rgb(&self) -> u32 {
-        u32::from_le_bytes([self.r, self.g, self.b, self.a])
+        #[cfg(feature = "emulator")]
+        return u32::from_le_bytes([self.r, self.g, self.b, self.a]);
+
+        #[cfg(feature = "device")]
+        return u32::from_le_bytes([self.b, self.g, self.r, self.a]);
     }
 }
 

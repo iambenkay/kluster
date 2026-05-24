@@ -9,14 +9,14 @@ use core::u8;
 pub use color::Color;
 use mailbox::{mbox_call, mbox_get, mbox_set};
 
-#[cfg(feature = "rpi5")]
+#[cfg(feature = "device")]
 const PHYSICAL_WIDTH: u32 = 3440;
-#[cfg(feature = "rpi5")]
+#[cfg(feature = "device")]
 const PHYSICAL_HEIGHT: u32 = 1440;
 
-#[cfg(feature = "rpi4")]
+#[cfg(feature = "emulator")]
 const PHYSICAL_WIDTH: u32 = 1500;
-#[cfg(feature = "rpi4")]
+#[cfg(feature = "emulator")]
 const PHYSICAL_HEIGHT: u32 = 900;
 
 const MBOX_REQUEST: u32 = 0;
@@ -253,14 +253,6 @@ pub fn draw_char(c: u8, px: u32, py: u32, scale: u32) {
     }
 }
 
-fn draw_str(s: &[u8], px: u32, py: u32, scale: u32) {
-    let mut cx = px;
-    for &c in s {
-        draw_char(c, cx, py, scale);
-        cx += 8 * scale;
-    }
-}
-
 fn write_color(addr: usize, color: &Color) {
     unsafe {
         if BPP == 2 {
@@ -272,79 +264,25 @@ fn write_color(addr: usize, color: &Color) {
 }
 
 pub mod debug {
-    static mut LOG_Y: u32 = 8;
-
-    pub fn log_u32(key: &[u8], value: u32) {
-        let scale = 1u32;
-        let mut buf = [b' '; 50];
-        let mut n = 0;
-        for &c in key {
-            buf[n] = c;
-            n += 1;
-        }
-        buf[n] = b':';
-        n += 1;
-        for shift in (0..8).rev() {
-            let nib = ((value >> (shift * 4)) & 0xF) as u8;
-            buf[n] = if nib < 10 {
-                b'0' + nib
-            } else {
-                b'A' + nib - 10
-            };
-            n += 1;
-        }
-        n += 1;
-        buf[n] = b'O';
-        n += 1;
-        buf[n] = b'R';
-        n += 2;
-
-        let (digits, len) = number_to_char_array::<12>(value);
-        for i in 0..len {
-            buf[n] = digits[i];
-            n += 1;
-        }
-
-        let width_px = 27 * 8 * scale; // reserve 25 chars
-        let x = unsafe { super::WIDTH }.saturating_sub(width_px + 8);
-        let y = unsafe { LOG_Y };
-        super::draw_str(&buf[..n], x, y, scale);
-        unsafe { LOG_Y += 8 * scale + 4 };
-    }
+    use crate::println;
 
     /// Dump the firmware-returned framebuffer geometry to the top-right corner.
     pub fn debug_dump() {
-        unsafe {
-            log_u32(b"W", super::WIDTH);
-            log_u32(b"H", super::HEIGHT);
-            log_u32(b"P", super::PITCH);
-            log_u32(b"S", super::SIZE as u32);
-            log_u32(b"DEPTH", super::DEPTH);
-            log_u32(b"FB", super::FRAME_BUFFER as u32);
-        }
-    }
-
-    fn number_to_char_array<const N: usize>(mut num: u32) -> ([u8; N], usize) {
-        let mut buffer = [b'\0'; N];
-        let mut index = N;
-
-        if num == 0 {
-            index -= 1;
-            buffer[index] = b'0';
-            return (buffer, N - index);
-        }
-
-        while num != 0 {
-            let remainder = num % 10;
-            index -= 1;
-            buffer[index] = b'0' + remainder as u8;
-            num /= 10;
-        }
-
-        let mut result = [b'\0'; N];
-        let len = N - index;
-        result[..len].copy_from_slice(&buffer[index..N]);
-
-        (result, len)
+        let (w, h, p, s, bpp, d) = unsafe {
+            (
+                super::WIDTH,
+                super::HEIGHT,
+                super::PITCH,
+                super::SIZE,
+                super::BPP,
+                super::DEPTH,
+            )
+        };
+        println!("Width: {}", w);
+        println!("Height: {}", h);
+        println!("Pitch: {}", p);
+        println!("Size: {}", s);
+        println!("Bits per pixel: {}", bpp);
+        println!("Depth: {}", d);
     }
 }

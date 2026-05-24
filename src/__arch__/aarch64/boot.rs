@@ -6,6 +6,6 @@ global_asm!(
 );
 
 #[unsafe(no_mangle)]
-pub unsafe fn _start_rust() -> ! {
+pub fn _start_rust() -> ! {
     crate::kernel::entrypoint()
 }

@@ -1,5 +1,4 @@
 use crate::board_core::screen::{self, Color};
-use crate::println;
 
 pub fn entrypoint() -> ! {
     if screen::init_buffer() {
@@ -10,8 +9,7 @@ pub fn entrypoint() -> ! {
         screen::draw_rect(500, 500, 600, 600, &Color::blue());
         screen::draw_rect(700, 500, 900, 700, &Color::from_rgb(0xFF, 0xFF, 0));
 
-        println!("rackOS by benkay");
-        println!("FRAMEBUFFER CONSOLE ONLINE");
+        screen::debug::debug_dump();
     }
 
     loop {}

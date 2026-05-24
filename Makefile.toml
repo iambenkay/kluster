@@ -6,7 +6,7 @@ RUSTFLAGS_PI4 = "-C target-cpu=cortex-a72 -C link-arg=--library-path=src/__board
 script = "RUSTFLAGS=${RUSTFLAGS} cargo objcopy --release  -- --strip-all -O binary target/kernel_2712.img"
 
 [tasks.mint-emulate]
-script = "RUSTFLAGS=${RUSTFLAGS_PI4} cargo objcopy --release --no-default-features --features rpi4  -- --strip-all -O binary target/kernel_2712.img"
+script = "RUSTFLAGS=${RUSTFLAGS_PI4} cargo objcopy --release --no-default-features --features emulator,rpi4  -- --strip-all -O binary target/kernel_2712.img"
 
 [tasks.sync]
 dependencies = ["mint"]

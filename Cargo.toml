@@ -10,7 +10,9 @@ test = false
 bench = false
 
 [features]
-default = ["rpi5"]
+default = ["device", "rpi5"]
+device = []
+emulator = []
 rpi5 = []
 rpi4 = []
 
