@@ -6,6 +6,6 @@ global_asm!(
 );
 
 #[unsafe(no_mangle)]
-pub fn _start_rust() -> ! {
+fn _start_rust() -> ! {
     crate::kernel::main()
 }

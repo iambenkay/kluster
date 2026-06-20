@@ -1,2 +1,2 @@
-pub mod bootloader;
+mod bootloader;
 pub mod cpu;
