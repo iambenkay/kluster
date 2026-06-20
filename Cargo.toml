@@ -16,5 +16,13 @@ panic = "abort"
 lto = true
 panic = "abort"
 
+[features]
+default = ["device", "rpi5"]
+emulator = ["ltr-rgb"]
+device = []
+rpi5 = []
+rpi4 = []
+ltr-rgb = []
+
 [target.'cfg(target_arch = "aarch64")'.dependencies]
 aarch64-cpu = { version = "9.x.x" }
