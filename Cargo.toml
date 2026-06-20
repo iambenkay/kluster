@@ -11,10 +11,11 @@ bench = false
 
 [features]
 default = ["device", "rpi5"]
-device = []
+device = ["color-rgb"]
 emulator = []
 rpi5 = []
 rpi4 = []
+color-rgb = []
 
 [profile.dev]
 panic = "abort"

@@ -1,4 +1,4 @@
-use crate::console;
+use crate::board_core;
 use core::fmt;
 
 #[macro_export]
@@ -15,5 +15,5 @@ macro_rules! println {
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
-    console::console().write_fmt(args).unwrap();
+    board_core::console().write_fmt(args).unwrap();
 }

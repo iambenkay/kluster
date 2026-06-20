@@ -1,12 +1,8 @@
-#[path = "mailbox.rs"]
 mod mailbox;
-
-#[path = "color.rs"]
-mod color;
 
 use core::u8;
 
-pub use color::Color;
+pub use crate::color::Color;
 use mailbox::{mbox_call, mbox_get, mbox_set};
 
 #[cfg(feature = "device")]
@@ -153,7 +149,7 @@ pub fn clear(color: &Color) {
     }
 }
 
-/// Write a color to a single pixel, honoring the framebuffer's bytes-per-pixel.
+/// Write a color to a single pixel, honoring the framebuffer's bits-per-pixel.
 pub fn draw_pixel(x: u32, y: u32, color: &Color) {
     unsafe {
         if FRAME_CONFIG.buffer == 0 || x >= FRAME_CONFIG.width || y >= FRAME_CONFIG.height {

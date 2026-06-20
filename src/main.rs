@@ -5,8 +5,10 @@
 
 mod board_core;
 mod bootloader;
-mod console;
+mod color;
 mod cpu;
+mod display;
+mod geometry;
 mod kernel;
 mod panic_cfg;
 mod print;

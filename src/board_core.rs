@@ -5,6 +5,6 @@ mod cpu;
 pub mod screen;
 
 #[path = "__board__/raspberrypi/console.rs"]
-pub mod console;
+mod console;
 
 pub use console::console;
