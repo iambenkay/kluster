@@ -1,2 +1,2 @@
-mod bootloader;
+mod bootimage;
 pub mod cpu;
