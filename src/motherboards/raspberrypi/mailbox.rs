@@ -13,22 +13,23 @@ const MBOX_EMPTY: u32 = 0x4000_0000;
 struct Flags;
 
 impl Flags {
+    #[inline(always)]
     fn read() -> *const u32 {
         (VIDEOCORE_MBOX + 0x00) as *const u32
     }
-
+    #[inline(always)]
     fn status() -> *const u32 {
         (VIDEOCORE_MBOX + 0x18) as *const u32
     }
-
+    #[inline(always)]
     fn write() -> *mut u32 {
         (VIDEOCORE_MBOX + 0x20) as *mut u32
     }
 }
 
 /// This is allocated for mailbox request-response flow.
-/// The mailbox interface is the recommended way for interacting with VideoCore.
-/// Without it, drawing to the screen would be needlessly complex
+/// The mailbox interface is a good way to interact with VideoCore for starters.
+/// Without it, drawing to the screen would be more complex
 #[repr(C, align(16))]
 struct Mailbox([u32; 36]);
 
