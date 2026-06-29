@@ -1,5 +1,3 @@
-use core::u8;
-
 use super::mailbox::{mbox_call, mbox_get, mbox_set};
 use crate::motherboards::display::DisplayBuffer;
 
