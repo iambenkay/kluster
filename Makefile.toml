@@ -13,8 +13,12 @@ dependencies = ["compile"]
 command = "cp"
 args = ["target/kernel_2712.img", "/Volumes/bootfs/kernel_2712.img"]
 
+[tasks.pad-binary]
+command = "bash"
+args = ["pad_512.sh", "target/kernel_2712.img"]
+
 [tasks.emulate]
-dependencies = ["compile-emulate"]
+dependencies = ["compile-emulate", "pad-binary"]
 command = "qemu-system-aarch64"
 args = [
     "-machine",
