@@ -1,7 +1,6 @@
 # kluster
 
-Disclaimer: This README is AI-generated but was thoroughly reviewed and edited by @iambenkay
-The actual source code of this project is purely hand-written.
+Disclaimer: This README is AI-generated but was thoroughly reviewed and edited. The actual source code of this project is purely hand-written.
 
 ## Introduction
 
